@@ -104,14 +104,19 @@ class DialClient:
             data = response.json()
             choices = data.get("choices", [])
             if choices:
-                content = choices[0].get("message", {}).get("content")
-                print("\n" + "="*50 + " RESPONSE " + "="*50)
-                if print_only_content:
-                    print(content)
-                else:
-                    print(json.dumps(data, indent=2, sort_keys=True))
-                print("="*108)
-                return Message(Role.AI, content)
+                content = ''
+                choice_index = 0
+                for choice in choices:
+                    choice_index += 1
+                    print(f"Choice #{choice_index}.")
+                    content = choice.get("message", {}).get("content")
+                    print("\n" + "="*50 + " RESPONSE " + "="*50)
+                    if print_only_content:
+                        print(content)
+                    else:
+                        print(json.dumps(data, indent=2, sort_keys=True))
+                    print("="*108)
+                return Message(Role.AI, content) # for now, it will return only with the last choice
             raise ValueError("No Choice has been present in the response")
         else:
             raise Exception(f"HTTP {response.status_code}: {response.text}")

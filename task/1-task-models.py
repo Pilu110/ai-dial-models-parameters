@@ -19,7 +19,7 @@ for deployment_name in deployment_names:
     try:
         run(
             deployment_name=deployment_name,
-            print_request=False, # Switch to False if you do not want to see the request in console
+            print_request=True, # Switch to False if you do not want to see the request in console
             print_only_content=True, # Switch to True if you want to see only content from response
             user_messages=user_messages
         )

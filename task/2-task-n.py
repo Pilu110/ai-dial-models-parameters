@@ -10,11 +10,21 @@ from task.app.main import run
 # - claude-3-7-sonnet@20250219
 # - gemini-2.5-pro
 
-run(
-    # TODO:
-    #  1. Provide `deployment_name` with model from the list above👆
-    #  2. Use `n` parameter with value in range from 1 to 5!
-)
+user_messages = ['Why is the snow white?', 'exit']
+deployment_names = ['gpt-4o', 'claude-3-7-sonnet@20250219', 'gemini-2.5-pro']
+
+for deployment_name in deployment_names:
+    print(f"Running with {deployment_name} deployment...")
+    try:
+        run(
+            deployment_name=deployment_name,
+            print_request=True, # Switch to False if you do not want to see the request in console
+            print_only_content=True, # Switch to True if you want to see only content from response
+            user_messages=user_messages,
+            n = 3
+        )
+    except Exception as ex:
+        print(f"Deployment '{deployment_name}' failed with {ex}.")
 
 # Pay attention to the number of choices in the response!
 # If you have worked with ChatGPT, you have probably seen responses where ChatGPT offers you a choice between two
