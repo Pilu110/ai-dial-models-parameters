@@ -8,12 +8,18 @@ from task.app.main import run
 #       Default: None or random unless specified on the LLM side
 #  User massage: Name a random animal
 
-run(
-    deployment_name='gpt-4o',
-    # TODO:
-    #  1. Use `seed` parameter with value 42 (or whatever you want)
-    #  2. Use `n` parameter with value 5
-)
+user_messages = ["Name a random animal", 'exit']
+
+for seed in [0, 1, 42]:
+    print(f"Running with {seed} seed...")
+    run(
+        deployment_name='gpt-4o',
+        print_request=False, # Switch to False if you do not want to see the request in console
+        print_only_content=True, # Switch to True if you want to see only content from response
+        user_messages=user_messages,
+        seed = seed,
+        n = 5
+    )
 
 # Check the content in choices. The expected result is that in almost all choices the result will be the same.
 # If you restart the app and retry, it should be mostly the same.
