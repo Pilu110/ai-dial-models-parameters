@@ -11,18 +11,25 @@ def run(
         deployment_name: str,
         print_request: bool = True,
         print_only_content: bool = False,
+        user_messages: list[str] = None,
         **kwargs
-) -> None:
+        ) -> None:
     client = DialClient(
         endpoint=DIAL_ENDPOINT,
         deployment_name=deployment_name,
     )
+
     conversation = Conversation()
     conversation.add_message(Message(Role.SYSTEM, DEFAULT_SYSTEM_PROMPT))
 
     print("Type your question or 'exit' to quit.")
+    read_messages = 0
     while True:
-        user_input = input("> ").strip()
+        if user_messages and len(user_messages) > read_messages:
+            user_input = user_messages[read_messages]
+            read_messages += 1
+        else:
+            user_input = input("> ").strip()
     
         if user_input.lower() == "exit":
             print("Exiting the chat. Goodbye!")
