@@ -27,6 +27,7 @@ def run(
     while True:
         if user_messages and len(user_messages) > read_messages:
             user_input = user_messages[read_messages]
+            print(f"> {user_input}")
             read_messages += 1
         else:
             user_input = input("> ").strip()
